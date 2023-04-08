@@ -8,8 +8,8 @@ import Header from '../../components/HeaderLoginRegister';
 import Footer from '../../components/Footer';
 
 
-// import TextField from '@mui/material/TextField';
-// import Stack from '@mui/material/Stack';
+ import TextField from '@mui/material/TextField';
+ import Stack from '@mui/material/Stack';
 // import useAuth from "../../hooks/useAuth";
 // import api from "../../service/api.js";
 
@@ -38,34 +38,34 @@ const Login = () => {
   });
 
     // const { signin } = useAuth();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
-    // const [email, setEmail] = useState("");
-    // const [senha, setSenha] = useState("");
-    // const [error, setError] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [error, setError] = useState("");
     
-    // function Entrar () {
+    function Entrar () {
       
-    //   if (!email || !senha) {
-    //     setError("Preencha todos os campos");
-    //     return;
-    //   }
+      // if (!email || !senha) {
+      //   setError("Preencha todos os campos");
+      //   return;
+      // }
 
-    //   var token;
-    //   api.post(`/users/autenticar`, {
-    //         email: email,
-    //         password: senha
-    //     })
-    //     .then(response => {
-    //                 console.log(response);
-    //                 token = response.data.token;
+      // var token;
+      // api.post(`/users/autenticar`, {
+      //       email: email,
+      //       password: senha
+      //   })
+      //   .then(response => {
+      //               console.log(response);
+      //               token = response.data.token;
 
-    //                 signin(email, token);
+      //               signin(email, token);
 
-    //                 navigate('/home')
-    //     }).catch(err => {
-    //     })        
-    // };
+      //               navigate('/home')
+      //   }).catch(err => {
+      //   })        
+    };
 
     
     return (
@@ -79,7 +79,7 @@ const Login = () => {
 
             <S.Content>
 
-            {/* <Stack width='20%' spacing={0.8} direction="column">
+            <Stack width='20%' spacing={0.8} direction="column">
                     <TextField
                         required
                         id="outlined-required"
@@ -104,7 +104,7 @@ const Login = () => {
                       <Link to="/register">&nbsp;Registre-se</Link>
                     </S.Strong>
                   </S.LabelSignup>
-            </Stack> */}
+            </Stack>
                 
 
                 

@@ -10,9 +10,9 @@ import Footer from '../../components/Footer';
 
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-// import useAuth from "../../hooks/useAuth";
-// import api from "../../service/api.js";
-// import axios from 'axios';
+import useAuth from "../../hooks/useAuth";
+import api from "../../service/api.js";
+import axios from 'axios';
 
 
 const Button = styled.button`
@@ -38,7 +38,7 @@ const Login = () => {
     
   });
 
-    // const { signin } = useAuth();
+    const { signin } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -47,25 +47,25 @@ const Login = () => {
     
     function Entrar () {
       
-    //   if (!email || !senha) {
-    //     setError("Preencha todos os campos");
-    //     return;
-    //   }
+      if (!email || !senha) {
+        setError("Preencha todos os campos");
+        return;
+      }
 
-    //   var token;
-    //   api.post(`/users/autenticar`, {
-    //         email: email,
-    //         password: senha
-    //     })
-    //     .then(response => {
-    //                 console.log(response);
-    //                 token = response.data.token;
+      var token;
+      api.post(`/users/autenticar`, {
+            email: email,
+            password: senha
+        })
+        .then(response => {
+                    console.log(response);
+                    token = response.data.token;
 
-    //                 signin(email, token);
+                    signin(email, token);
 
-    //                 navigate('/home')
-    //     }).catch(err => {
-    //     })        
+                    navigate('/home')
+        }).catch(err => {
+        })        
     };
 
     
@@ -105,16 +105,9 @@ const Login = () => {
                       <Link to="/register">&nbsp;Registre-se</Link>
                     </S.Strong>
                   </S.LabelSignup>
-            </Stack>
-                
-
-                
-        
-                
-       
-
+              </Stack>
             </S.Content>
-
+            
             <Footer/>
         </S.Container>
     )

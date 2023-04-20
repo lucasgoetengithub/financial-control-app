@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from '../views/App';
 import Login from '../views/Login';
 
+import useAuth from "../hooks/useAuth";
+
 const Private = ({ Item }) => {
     const user = JSON.parse(localStorage.getItem("user_token"));    
 

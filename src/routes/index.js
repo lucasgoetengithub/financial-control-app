@@ -7,16 +7,15 @@ import Login from '../views/Login';
 const Private = ({ Item }) => {
     const user = JSON.parse(localStorage.getItem("user_token"));    
 
-    // const { signed } = useAuth();
-    // var logado = false;
-    // if (user != null) {
-    //     logado = true;
-    // } else {
-    //     logado = signed;
-    // }
+    const { signed } = useAuth();
+    var logado = false;
+    if (user != null) {
+        logado = true;
+    } else {
+        logado = signed;
+    }
     
-    // return logado ? <Item/> : <Login/>
-    return <Item/>;
+    return logado ? <Item/> : <Login/>
 }
 
 export default function Routers() {
@@ -24,7 +23,7 @@ export default function Routers() {
         <BrowserRouter>
         <Fragment>
                 <Routes>
-                    <Route path="/" element={<App />} />
+                    {/* <Route path="/" element={<App />} /> */}
                     {/* <Route path="/login" element={<Login />} /> */}
                     <Route exact path="/login" element={<Private Item={Login} />} />
                     {/* <Route path="/Register" element={<Register />} />

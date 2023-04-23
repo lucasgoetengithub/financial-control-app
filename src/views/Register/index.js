@@ -13,6 +13,8 @@ import Stack from '@mui/material/Stack';
 import useAuth from "../../hooks/useAuth";
 
 import api from '../../service/api.js';
+import { AuthContext } from '../../contexts/AuthProvider';
+import { useContext } from "react";
 
 
 const Button = styled.button`
@@ -34,7 +36,6 @@ const Button = styled.button`
 
 const Register = () => {
 
-    const { signup } = useAuth();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -43,38 +44,37 @@ const Register = () => {
     const [name, setName] = useState("");
     const [error, setError] = useState("");
     
-    const Registrar = () => {
-      
-      if (!email | !emailConf | !senha) {
-        setError("Preencha todos os campos");
-        return;
-      } else if (email !== emailConf) {
-        setError("Os e-mails não são iguais");
-        return;
+    const { signup } = useContext(AuthContext);
+
+    const handleSignup = async (event) => {
+      event.preventDefault();
+  
+      try {
+        if (!email | !emailConf | !senha) {
+          setError("Preencha todos os campos");
+          return;
+        } else if (email !== emailConf) {
+          setError("Os e-mails não são iguais");
+          return;
+        }
+
+        api.post(`/users/existe`,{email:email})
+        .then(response=> {
+            console.log(response);
+            if (response.data === true) {
+              alert("Já tem uma conta com esse E-mail");
+              setError("Já tem uma conta com esse E-mail");
+            } else {
+              console.log('criando');
+              signup(name, email, senha);
+              navigate("/");
+            }
+        })
+  
+        
+      } catch (error) {
+        console.error('Erro ao criar conta do usuário:', error);
       }
-
-      var res = "";
-      api.get(`/users/email/` + email)
-      .then(response=> {
-          console.log(response);
-          if (response.data.entity.status && response.data.entity.status === 404) {
-            
-            res = signup(name, email, senha);
-
-            navigate("/");
-          } else {
-            alert("Já tem uma conta com esse E-mail");
-          }
-
-          if (res) {
-            setError(res);
-            return;
-          }
-      })
-      .catch(err => {
-            res = signup(name, email, senha);
-            navigate("/");
-      })
     };
 
     return (
@@ -119,11 +119,11 @@ const Register = () => {
                         onChange={(e) => [setSenha(e.target.value), setError("")]}
                     />
 
-                    <Button onClick={Registrar}>Inscrever</Button>
+                    <Button onClick={handleSignup}>Inscrever</Button>
                       <S.LabelSignin>
                         Já tem uma conta?
                         <S.Strong>
-                          <Link to="/">&nbsp;Entre</Link>
+                          <Link to="/login">&nbsp;Entre</Link>
                         </S.Strong>
                       </S.LabelSignin>
             </Stack>

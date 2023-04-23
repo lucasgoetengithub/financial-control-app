@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
     "@material-ui/core": "4.12.4",
     "@mui/material": "^5.11.16",
     "@mui/x-data-grid": "^6.2.1",

@@ -10,9 +10,10 @@ import Footer from '../../components/Footer';
 
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import useAuth from "../../hooks/useAuth";
 import api from "../../service/api.js";
 import axios from 'axios';
+import { AuthContext } from '../../contexts/AuthProvider';
+import { useContext } from "react";
 
 
 const Button = styled.button`
@@ -38,34 +39,37 @@ const Login = () => {
     
   });
 
-    const { signin } = useAuth();
+    const { signin } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [error, setError] = useState("");
     
-    function Entrar () {
+    const handleSignin = async (event) => {
       
       if (!email || !senha) {
         setError("Preencha todos os campos");
         return;
       }
 
-      var token;
-      api.post(`/users/autenticar`, {
+      var token = '';
+      await api.post(`/users/autenticar`, {
             email: email,
             password: senha
         })
         .then(response => {
-                    console.log(response);
                     token = response.data.token;
-
-                    signin(email, token);
-
-                    navigate('/home')
         }).catch(err => {
+          setError('Usuario nao encontrado')
         })        
+
+        if (token) {
+          await signin(email, token);
+
+        navigate('/home')
+        }
+        
     };
 
     
@@ -98,7 +102,7 @@ const Login = () => {
                     />
                     <S.labelError>{error}</S.labelError>
 
-                    <Button onClick={Entrar}>ENTRAR</Button>
+                    <Button onClick={handleSignin}>ENTRAR</Button>
                     <S.LabelSignup>
                     Não tem uma conta?
                     <S.Strong>

@@ -19,9 +19,17 @@ const AuthProvider = ({ children }) => {
       }
   };
 
+  const signin = async(email, token) => {
+    localStorage.setItem("user_token", JSON.stringify({ email, token }));
+    setUser({ email, token });
+    
+    return;
+  }
+
   const values = {
     user,
     signup,
+    signin,
   };
   
 

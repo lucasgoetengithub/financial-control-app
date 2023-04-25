@@ -66,8 +66,7 @@ const Login = () => {
 
         if (token) {
           await signin(email, token);
-
-        navigate('/home')
+          navigate('/home')
         }
         
     };

@@ -15,6 +15,7 @@ import Alert from '@mui/material/Alert';
 
 import { TextField } from "@material-ui/core";
 import Stack from '@mui/material/Stack';
+import MoneyInput from "@rschpdr/react-money-input";
 
 
 const Button = styled.button`
@@ -524,7 +525,7 @@ function Home() {
             <S.Content>
                 <S.tableArea>
                     <Stack spacing={1} direction="row">
-                        {/* <MoneyInput
+                        <MoneyInput
                             customInput={TextField}
                             variant="outlined"
                             currencyConfig={{
@@ -536,7 +537,7 @@ function Home() {
                             name="amount"
                             onChange={handleChange}
                             value={amount} 
-                        /> */}
+                        />
                     </Stack>
 
                     <React.StrictMode>

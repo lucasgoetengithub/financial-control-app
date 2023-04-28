@@ -114,9 +114,7 @@ function Home() {
         
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
-        const userToken = `Bearer ${user.token}`;
-        console.log(userEmail);
-        console.log(userToken);
+        const userToken = user.token;
         
         setEmail(user.email);
         setToken(user.token);

@@ -177,6 +177,7 @@ function Home() {
     }
 
     const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+        console.log("teste1")
         setFocusedInvest(params.row.id);
         setFocusedInvestMaxAmount(params.row.maxAmount);
 
@@ -212,23 +213,17 @@ function Home() {
         
     };
 
-    function calculatePorcentage(field, value) {
-        if (field === "percentage") {
-            return (value * amount) / 100;
-
-        } else if (field === "maxAmount") {
-            return (value * 100) / amount;
-        }
-
-        return 0;
-    }
-
-    const handleRowEditCommit: GridEventListener<'cellEditCommit'> = (
-        params, 
-      ) => {
+    const handleProcessRowUpdateError = React.useCallback((error: Error) => {
+        console.log("erro tratar");
+      }, []);
+    
+   const handleRowEditCommit: GridEventListener<'editCellChange'> = (params) => {
+    
+        console.log("teste");
         const row = rows.findIndex((element) => {
             return element.id === params.id;
         });  
+        
 
         if (params.field === "description") {
             rows[row].description = params.value;
@@ -292,6 +287,17 @@ function Home() {
         } else {
             setMessage('');
         }
+    }
+
+    function calculatePorcentage(field, value) {
+        if (field === "percentage") {
+            return (value * amount) / 100;
+
+        } else if (field === "maxAmount") {
+            return (value * 100) / amount;
+        }
+
+        return 0;
     }
 
 
@@ -549,7 +555,7 @@ function Home() {
 
                         <StyledEngineProvider injectFirst>
                             <div style={{ height: 370, width: 540 }}>
-                                <DataGrid hideFooter="true" rows={rows} columns={columns} onCellEditCommit={handleRowEditCommit} experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
+                                <DataGrid hideFooter='true' rows={rows} columns={columns} processRowUpdate={handleRowEditCommit} onProcessRowUpdateError={handleProcessRowUpdateError} experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
                             </div>
                             
                             {message && <Alert severity="info">{message}</Alert>}

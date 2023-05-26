@@ -172,6 +172,7 @@ function Home() {
         
     }, [])
 
+
     const handleRowAllocationClick: GridEventListener<'rowClick'> = (params) => {
         setFocusedDistributions(params.row.id);
     }
@@ -213,13 +214,8 @@ function Home() {
         
     };
 
-    const handleProcessRowUpdateError = React.useCallback((error: Error) => {
-        console.log("erro tratar");
-      }, []);
-    
-   const handleRowEditCommit: GridEventListener<'editCellChange'> = (params) => {
-    
-        console.log("teste");
+    const commitcell: GridCellEditStopParams<'rowClick'> = (params) => {
+        console.log("teste chubalaca");
         const row = rows.findIndex((element) => {
             return element.id === params.id;
         });  
@@ -248,45 +244,7 @@ function Home() {
 
         console.log(rows[row]);
 
-        const headers  = { 'Authorization': token }
-        api.put(`/whereInvest/update`, body, {headers}).then(() => {
-            api.get(`/whereInvest/allByUser/` + userId, {headers})
-                .then(response=> {
-                    var rowsWhereInvest = [];
-                    var columnsPie = [];
-                    columnsPie.push(["Alocação", "Porcentagem"]);
-
-                    response.data[0].json.forEach(element => {
-                        rowsWhereInvest.push({
-                            id: element.id,
-                            description: element.description,
-                            percentage: element.percentage,
-                            maxAmount: element.maxAmount
-                        });
-
-                        columnsPie.push([element.description, element.maxAmount])
-
-                    });
-
-                    rowsWhereInvest.sort(compare)
-
-                    setRows(rowsWhereInvest);
-                    setColuns(columnsPie);
-                })
-        });
-
-        let totalPercentage = 0;
-        let totalAmunt= 0;
-        rows.forEach(row => {
-            totalPercentage += row.percentage;
-            totalAmunt += row.amount;
-        });
         
-        if (totalPercentage > 100 || totalAmunt > amount) {
-            setMessage('Seu planejamento excede 100% dos seus ganhos');
-        } else {
-            setMessage('');
-        }
     }
 
     function calculatePorcentage(field, value) {
@@ -555,7 +513,7 @@ function Home() {
 
                         <StyledEngineProvider injectFirst>
                             <div style={{ height: 370, width: 540 }}>
-                                <DataGrid hideFooter='true' rows={rows} columns={columns} processRowUpdate={handleRowEditCommit} onProcessRowUpdateError={handleProcessRowUpdateError} experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
+                                <DataGrid hideFooter='true' rows={rows} columns={columns} onCellEditStop={commitcell}  experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
                             </div>
                             
                             {message && <Alert severity="info">{message}</Alert>}

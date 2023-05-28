@@ -10,7 +10,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { StyledEngineProvider } from '@mui/material/styles';
 
-import { DataGrid, GridColumns, GridEventListener, useGridApiRef } from '@mui/x-data-grid';
+import { DataGrid, GridColumns, GridEventListener, GridCellParams } from '@mui/x-data-grid';
 import Alert from '@mui/material/Alert';
 
 import { TextField } from "@material-ui/core";
@@ -178,7 +178,6 @@ function Home() {
     }
 
     const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-        console.log("teste1")
         setFocusedInvest(params.row.id);
         setFocusedInvestMaxAmount(params.row.maxAmount);
 
@@ -214,8 +213,10 @@ function Home() {
         
     };
 
-    const commitcell: GridCellEditStopParams<'rowClick'> = (params) => {
-        console.log("teste chubalaca");
+    // const commitcell: GridCellEditCommitParams<'cellEditCommit'> = (params) => {
+        const handleCellEditCommit = (params: GridCellParams) => {
+        
+        console.log('teste');
         const row = rows.findIndex((element) => {
             return element.id === params.id;
         });  
@@ -244,7 +245,53 @@ function Home() {
 
         console.log(rows[row]);
 
+        const headers  = { 'Authorization': token }
+        api.put(`/whereInvest/update`, body, {headers}).then(() => {
+            api.get(`/whereInvest/allByUser/` + userId, {headers})
+                .then(response=> {
+                    console.log('teste 1');
+                    var rowsWhereInvest = [];
+                    var columnsPie = [];
+                    columnsPie.push(["Alocação", "Porcentagem"]);
+
+                    console.log('teste 2');
+                    response.data[0].json.forEach(element => {
+                        rowsWhereInvest.push({
+                            id: element.id,
+                            description: element.description,
+                            percentage: element.percentage,
+                            maxAmount: element.maxAmount
+                        });
+
+                        columnsPie.push([element.description, element.maxAmount])
+
+                    });
+
+                    console.log('teste 3');
+
+                    rowsWhereInvest.sort(compare)
+
+                    console.log('teste 4');
+                    setRows(rowsWhereInvest);
+                    setColuns(columnsPie);
+                })
+        });
+
+        console.log('teste 5');
+
+        let totalPercentage = 0;
+        let totalAmunt= 0;
+        rows.forEach(row => {
+            totalPercentage += row.percentage;
+            totalAmunt += row.amount;
+        });
         
+        console.log('teste 6');
+        if (totalPercentage > 100 || totalAmunt > amount) {
+            setMessage('Seu planejamento excede 100% dos seus ganhos');
+        } else {
+            setMessage('');
+        }
     }
 
     function calculatePorcentage(field, value) {
@@ -513,7 +560,7 @@ function Home() {
 
                         <StyledEngineProvider injectFirst>
                             <div style={{ height: 370, width: 540 }}>
-                                <DataGrid hideFooter='true' rows={rows} columns={columns} onCellEditStop={commitcell}  experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
+                                <DataGrid editMode="cell" hideFooter='true' rows={rows} columns={columns} onCellEditCommit={handleCellEditCommit}  experimentalFeatures={{ newEditingApi: true } } onRowClick={handleRowClick} />
                             </div>
                             
                             {message && <Alert severity="info">{message}</Alert>}

@@ -80,8 +80,6 @@ function HistoryCards() {
                 setUserId(varUserId);
                 api.get(`/whereInvest/history/`+varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
-                    console.log('card abaixo');
-                    console.log(response.data);
                     setWhereInvest(response.data);    
                 });
             });
@@ -91,6 +89,8 @@ function HistoryCards() {
         const fetchChart = async () => {
             await api.get("/DistributionWhereInvest/chart/" + userEmail, { 'headers': { 'Authorization': userToken } })
             .then(response =>  {
+                console.log('teste');
+                console.log(response);
                 var dados = [];
                     dados.push([
                         "Reference",
@@ -124,6 +124,7 @@ function HistoryCards() {
                 <S.CardsArea>
                 {
                     whereInvest.map(whereInvest => (
+                        
                         <Link to={`/home`}>
                             <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
                         </Link>

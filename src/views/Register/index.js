@@ -60,12 +60,10 @@ const Register = () => {
 
         api.post(`/users/existe`,{email:email})
         .then(response=> {
-            console.log(response);
             if (response.data === true) {
               alert("Já tem uma conta com esse E-mail");
               setError("Já tem uma conta com esse E-mail");
             } else {
-              console.log('criando');
               signup(name, email, senha);
               navigate("/");
             }

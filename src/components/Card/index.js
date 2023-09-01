@@ -17,13 +17,9 @@ function Card({ reference, json, amount, whereInvestId }) {
     const userToken = user.token;
 
     var investimentos = 0.0;
-    var despesas = 0.0;
-    console.log('id abaixo');
-    console.log(whereInvestId);
+    var despesas = 0.0; 
     api.get('/DistributionWhereInvest/' + whereInvestId, { 'headers': { 'Authorization': userToken } })
     .then(response=> {
-      console.log('dentro do card0');
-      console.log(response);
         response.data.jsonDistributionWhereInvests.forEach(element => {
             if (element.investExpense == 'Despesa') {
               despesas = despesas + element.amountUsed;
@@ -32,19 +28,14 @@ function Card({ reference, json, amount, whereInvestId }) {
             }
         });
         
-        console.log('dentro do card1');
         var investimentosLabel = investimentos.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
         setInvestimentos(investimentosLabel);
-        console.log('dentro do card2');
         var despesasLabel = despesas.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
         setDespesas(despesasLabel);
-        console.log('dentro do card3');
     });
 
     var ganhosLabel = amount.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
     setGanhos(ganhosLabel);
-
-    
 
     const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
 

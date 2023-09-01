@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import styled from "styled-components";
 import * as S from './styles';
@@ -94,6 +95,7 @@ const columnsAllocation: GridColumns = [
 
 
 function Home() {
+
     const [coluns, setColuns] = useState();
     const [rowsAllocation, setRowsAllocation] = useState([])
     const [rows, setRows] = useState([]);
@@ -108,10 +110,9 @@ function Home() {
 
     const [message, setMessage] = React.useState('');
     const [messageDistribution, setMessageDistribution] = React.useState('');
+    const {reference} = useParams();
     
     useEffect(() =>{
-
-        
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
         const userToken = user.token;
@@ -119,18 +120,17 @@ function Home() {
         setEmail(user.email);
         setToken(user.token);
         let body = {email : userEmail} ;
+        
 
         api.post("/users/email",body,  { 'headers': { 'Authorization': userToken } })
         .then(response=> {
-            console.log(response);
             const varUserId = response.data.id;
             setUserId(varUserId);
-            api.get(`/whereInvest/allByUser/` + varUserId, { 'headers': { 'Authorization': userToken } })
+            if (reference) {
+                api.get(`/whereInvest/allByUser/reference/` + varUserId + `/` + reference, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
                     var rowsWhereInvest = [];
                     var columnsPie = [];
-                    console.log('where invest amount');
-                    console.log(response);
                     setAmount(response.data[0].amount);
                     columnsPie.push(["Alocação", "Porcentagem"])
                     response.data[0].json.forEach(element => {
@@ -149,7 +149,35 @@ function Home() {
                     setColuns(columnsPie);
                     setRows(rowsWhereInvest);
                     setWhereInvestId(response.data[0].id);
-            })
+                })
+            } else {
+                
+                console.log('teste');
+                api.get(`/whereInvest/allByUser/` + varUserId, { 'headers': { 'Authorization': userToken } })
+                .then(response=> {
+                    var rowsWhereInvest = [];
+                    var columnsPie = [];
+                    setAmount(response.data[0].amount);
+                    columnsPie.push(["Alocação", "Porcentagem"])
+                    response.data[0].json.forEach(element => {
+                        rowsWhereInvest.push({
+                            id: element.id,
+                            description: element.description,
+                            percentage: element.percentage,
+                            maxAmount: element.maxAmount
+                        });
+
+                        columnsPie.push([element.description, element.maxAmount])
+
+                    });
+
+                    rowsWhereInvest.sort(compare)
+                    setColuns(columnsPie);
+                    setRows(rowsWhereInvest);
+                    setWhereInvestId(response.data[0].id);
+                })
+            }
+            
         
             if (focusedInvest) {
                 api.get(`/DistributionWhereInvest/` + whereInvestId, { 'headers': { 'Authorization': userToken } })
@@ -216,7 +244,6 @@ function Home() {
     // const commitcell: GridCellEditCommitParams<'cellEditCommit'> = (params) => {
         const handleCellEditCommit = (params: GridCellParams) => {
         
-        console.log('teste');
         const row = rows.findIndex((element) => {
             return element.id === params.id;
         });  
@@ -229,7 +256,6 @@ function Home() {
         if (params.field === "percentage") {
             rows[row].percentage = params.value;
             rows[row].maxAmount = calculatePorcentage(params.field, params.value);
-            console.log(calculatePorcentage(params.field, params.value));
         }
 
         if (params.field === "maxAmount") {
@@ -243,18 +269,15 @@ function Home() {
             'userId':userId
         };
 
-        console.log(rows[row]);
 
         const headers  = { 'Authorization': token }
         api.put(`/whereInvest/update`, body, {headers}).then(() => {
             api.get(`/whereInvest/allByUser/` + userId, {headers})
                 .then(response=> {
-                    console.log('teste 1');
                     var rowsWhereInvest = [];
                     var columnsPie = [];
                     columnsPie.push(["Alocação", "Porcentagem"]);
 
-                    console.log('teste 2');
                     response.data[0].json.forEach(element => {
                         rowsWhereInvest.push({
                             id: element.id,
@@ -267,17 +290,14 @@ function Home() {
 
                     });
 
-                    console.log('teste 3');
 
                     rowsWhereInvest.sort(compare)
 
-                    console.log('teste 4');
                     setRows(rowsWhereInvest);
                     setColuns(columnsPie);
                 })
         });
 
-        console.log('teste 5');
 
         let totalPercentage = 0;
         let totalAmunt= 0;
@@ -286,7 +306,6 @@ function Home() {
             totalAmunt += row.amount;
         });
         
-        console.log('teste 6');
         if (totalPercentage > 100 || totalAmunt > amount) {
             setMessage('Seu planejamento excede 100% dos seus ganhos');
         } else {

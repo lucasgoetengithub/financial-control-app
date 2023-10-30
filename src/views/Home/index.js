@@ -116,6 +116,9 @@ function Home() {
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
         const userToken = user.token;
+        console.log('reference abaixo');
+        console.log(reference);
+        
         
         setEmail(user.email);
         setToken(user.token);
@@ -151,8 +154,6 @@ function Home() {
                     setWhereInvestId(response.data[0].id);
                 })
             } else {
-                
-                console.log('teste');
                 api.get(`/whereInvest/allByUser/` + varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
                     var rowsWhereInvest = [];
@@ -272,7 +273,8 @@ function Home() {
 
         const headers  = { 'Authorization': token }
         api.put(`/whereInvest/update`, body, {headers}).then(() => {
-            api.get(`/whereInvest/allByUser/` + userId, {headers})
+            if (reference) {
+                api.get(`/whereInvest/allByUser/reference/` + userId + `/` + reference, { headers })
                 .then(response=> {
                     var rowsWhereInvest = [];
                     var columnsPie = [];
@@ -296,6 +298,33 @@ function Home() {
                     setRows(rowsWhereInvest);
                     setColuns(columnsPie);
                 })
+            } else {
+                api.get(`/whereInvest/allByUser/` + userId, {headers})
+                .then(response=> {
+                    var rowsWhereInvest = [];
+                    var columnsPie = [];
+                    columnsPie.push(["Alocação", "Porcentagem"]);
+
+                    response.data[0].json.forEach(element => {
+                        rowsWhereInvest.push({
+                            id: element.id,
+                            description: element.description,
+                            percentage: element.percentage,
+                            maxAmount: element.maxAmount
+                        });
+
+                        columnsPie.push([element.description, element.maxAmount])
+
+                    });
+
+
+                    rowsWhereInvest.sort(compare)
+
+                    setRows(rowsWhereInvest);
+                    setColuns(columnsPie);
+                })
+            }
+            
         });
 
 

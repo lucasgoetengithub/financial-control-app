@@ -80,6 +80,8 @@ function HistoryCards() {
                 setUserId(varUserId);
                 api.get(`/whereInvest/history/`+varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
+                    console.log('Dadinhos abaixo');
+                    console.log(response.data);
                     setWhereInvest(response.data);    
                 });
             });
@@ -124,8 +126,7 @@ function HistoryCards() {
                 <S.CardsArea>
                 {
                     whereInvest.map(whereInvest => (
-                        
-                        <Link to={`/home`}>
+                        <Link to={`/home/` + whereInvest.date}>
                             <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
                         </Link>
                     ))

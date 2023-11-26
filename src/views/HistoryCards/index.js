@@ -113,6 +113,13 @@ function HistoryCards() {
         fetchChart();
     }, [])
 
+    function formataReference(e){
+        
+        let reference = e.toString();
+        reference = reference.replaceAll(",", "-");
+        return reference;
+    }
+
     return (
         <S.Container>
             <Header/>
@@ -126,7 +133,7 @@ function HistoryCards() {
                 <S.CardsArea>
                 {
                     whereInvest.map(whereInvest => (
-                        <Link to={`/home/` + whereInvest.date}>
+                        <Link to={`/home/` + formataReference(whereInvest.date)}>
                             <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
                         </Link>
                     ))

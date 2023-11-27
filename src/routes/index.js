@@ -5,6 +5,7 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import Home from '../views/Home';
 import HistoryCards from '../views/HistoryCards';
+import Calculator from '../views/Calculator'
 
 import useAuth from "../hooks/useAuth";
 
@@ -33,6 +34,7 @@ export default function Routers() {
                     <Route exact path="/home" element={<Private Item={Home} />} />
                     <Route exact path="/home/:reference" element={<Private Item={Home} />} />
                     <Route exact path="/history" element={<Private Item={HistoryCards} />} />
+                    <Route exact path="/calculator" element={<Private Item={Calculator} />} />
                     {/* <Route path="/Register" element={<Register />} />
                     <Route exact path="/home" element={<Private Item={Home} />} />
                     <Route exact path="/history" element={<Private Item={HistoryCards} />} />

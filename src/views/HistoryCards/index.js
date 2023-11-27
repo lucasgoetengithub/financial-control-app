@@ -114,7 +114,6 @@ function HistoryCards() {
     }, [])
 
     function formataReference(e){
-        
         let reference = e.toString();
         reference = reference.replaceAll(",", "-");
         return reference;

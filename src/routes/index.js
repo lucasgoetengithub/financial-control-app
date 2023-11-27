@@ -35,11 +35,6 @@ export default function Routers() {
                     <Route exact path="/home/:reference" element={<Private Item={Home} />} />
                     <Route exact path="/history" element={<Private Item={HistoryCards} />} />
                     <Route exact path="/calculator" element={<Private Item={Calculator} />} />
-                    {/* <Route path="/Register" element={<Register />} />
-                    <Route exact path="/home" element={<Private Item={Home} />} />
-                    <Route exact path="/history" element={<Private Item={HistoryCards} />} />
-                    <Route exact path="/calculator" element={<Private Item={Calculator} />} />
-                    <Route path="*" element={<Login />} /> */}
                 </Routes>
         </Fragment>
         </BrowserRouter>

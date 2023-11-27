@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import api from '../../service/api.js';
 
-// import MoneyInput from "@rschpdr/react-money-input";
+import MoneyInput from "@rschpdr/react-money-input";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -375,19 +375,21 @@ function Calculator() {
                                 onChange={(e) => [setPercentageFixa(e.target.value), setError("")]}
                             />
 
-                            {/* <MoneyInput
-                                customInput={TextField}
-                                variant="outlined"
-                                currencyConfig={{
-                                    locale: "pt-BR",
-                                    currencyCode: "BRL",
-                                    currencyDisplay: "symbol"
-                                    }}
-                                label="Aporte mensal"
-                                name="aporte mensal"
-                                onChange={handleChangeMoney}
-                                value={aporteMensalFixa} 
-                            /> */}
+                            <Stack spacing={1} direction="row">
+                              <MoneyInput
+                                  customInput={TextField}
+                                  variant="outlined"
+                                  currencyConfig={{
+                                      locale: "pt-BR",
+                                      currencyCode: "BRL",
+                                      currencyDisplay: "symbol"
+                                      }}
+                                  label="Aporte mensal"
+                                  name="aporte mensal"
+                                  onChange={handleChangeMoney}
+                                  value={aporteMensalFixa} 
+                              />
+                          </Stack>
 
                             <S.Button onClick={calcularFixa}>Calcular    </S.Button>
                             <S.Button onClick={salvarFixa}>Salvar calculo    </S.Button>
@@ -406,19 +408,21 @@ function Calculator() {
                                 onChange={(e) => [setNomeInvestimentoAcao(e.target.value), setError("")]}
                             />
 
-                            {/* <MoneyInput
-                                customInput={TextField}
-                                variant="outlined"
-                                currencyConfig={{
-                                    locale: "pt-BR",
-                                    currencyCode: "BRL",
-                                    currencyDisplay: "symbol"
-                                    }}
-                                label="Valor da ação"
-                                name="valorPrecoUnitarioDaAcao"
-                                onChange={handlerValorAcao}
-                                value={valorAcao} 
-                            /> */}
+                            <Stack spacing={1} direction="row">
+                              <MoneyInput
+                                  customInput={TextField}
+                                  variant="outlined"
+                                  currencyConfig={{
+                                      locale: "pt-BR",
+                                      currencyCode: "BRL",
+                                      currencyDisplay: "symbol"
+                                      }}
+                                  label="Valor da ação"
+                                  name="valorPrecoUnitarioDaAcao"
+                                  onChange={handlerValorAcao}
+                                  value={valorAcao} 
+                              />
+                          </Stack>
                           </Stack>
                         
                           <Stack spacing={2} direction="column">
@@ -429,19 +433,21 @@ function Calculator() {
                                 onChange={(e) => [setTotalAnosAcao(e.target.value), setError("")]}
                             />
 
-                            {/* <MoneyInput
-                                customInput={TextField}
-                                variant="outlined"
-                                currencyConfig={{
-                                    locale: "pt-BR",
-                                    currencyCode: "BRL",
-                                    currencyDisplay: "symbol"
-                                    }}
-                                label="Dividendos por ação"
-                                name="Dividendos por ação"
-                                onChange={handleDividendoPorAcao}
-                                value={dividendoPorAcao} 
-                            /> */}
+                            <Stack spacing={1} direction="row">
+                              <MoneyInput
+                                  customInput={TextField}
+                                  variant="outlined"
+                                  currencyConfig={{
+                                      locale: "pt-BR",
+                                      currencyCode: "BRL",
+                                      currencyDisplay: "symbol"
+                                      }}
+                                  label="Dividendos por ação"
+                                  name="Dividendos por ação"
+                                  onChange={handleDividendoPorAcao}
+                                  value={dividendoPorAcao} 
+                              />
+                            </Stack>
                           </Stack>
                           
                           <Stack spacing={2} direction="column">

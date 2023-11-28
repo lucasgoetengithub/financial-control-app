@@ -125,9 +125,12 @@ function Calculator() {
       setEmail(user.email);
       setToken(user.token);
 
-      api.get("/users/email/" + userEmail, { 'headers': { 'Authorization': userToken } })
-      .then(response=> {
-          const varUserId = response.data.entity.id;
+      let body = {email : userEmail} ;
+
+      api.post("/users/email",body,  { 'headers': { 'Authorization': userToken } })
+            .then(response =>  {
+                const varUserId = response.data.id;
+                
           setUserId(varUserId);      
       })
         
@@ -164,7 +167,7 @@ function Calculator() {
           porcentagem: percentageFixa,
           userId: userId,
           aporteMensal : aporteMensalFixa,
-          jsonCalculatorFixa: listCalculo
+          jsonCalculatorFixas: listCalculo
       }, {headers}).then(() => {
           
       })
@@ -177,6 +180,16 @@ function Calculator() {
       var listaGrafico = [];
       var valorAtual = 0;
       var rendimentoNoMes = 0;
+      console.log('aporte');
+      console.log(aporteMensalFixa);
+
+      var dados = [];
+      dados.push([
+        "Valor total",
+        "Rendimento no mês"
+      ]);
+
+      
 
       for (let index = 1; index <= meses; index++) {
         if (index === 1) {
@@ -186,32 +199,22 @@ function Calculator() {
         }
         
         valorAtual = valorAtual + aporteMensalFixa + rendimentoNoMes;
-
         listaGrafico.push({
           id: index,
           nome: nomeInvestimentoFixa,
           percentage: percentageFixa,
           valorAtual: valorAtual,
           rendimentoNoMes: rendimentoNoMes
-        })        
+        })       
+
+        dados.push([valorAtual, rendimentoNoMes]); 
       }
-
-      var dados = [];
-      dados.push([
-          "Reference",
-          "Rendimento no mês"
-      ]);
-
-      listaGrafico.forEach(element => {
-          dados.push([element.id, element.rendimentoNoMes]);
-      });    
 
       setDadosGrafico(dados);
 
       console.log(listaGrafico);
       setListCalculo(listaGrafico);
       setShowElement(true);
-
     }
     
     function salvarAcoes() {
@@ -238,6 +241,12 @@ function Calculator() {
       let rendimentoNoMes = 0;
       var acaoPorMesInt = parseInt(acoesPorMes);
 
+      var dados = [];
+      dados.push([
+          "Qnt Açoes",
+          "Rendimento no mês"
+      ]);
+
       for (let index = 1; index <= meses; index++) {
         console.log(index);
         rendimentoNoMes = quantidadeAcoes * dividendoPorAcao;
@@ -260,17 +269,9 @@ function Calculator() {
           rendimentoNoMes: rendimentoNoMes
         });
 
-      }
+        dados.push([quantidadeAcoes, rendimentoNoMes]);
 
-      var dados = [];
-      dados.push([
-          "Reference",
-          "Rendimento no mês"
-      ]);
-
-      listaGrafico.forEach(element => {
-          dados.push([element.id, element.rendimentoNoMes]);
-      });    
+      } 
 
       setDadosGrafico(dados);
 

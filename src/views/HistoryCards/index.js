@@ -128,30 +128,27 @@ function HistoryCards() {
             </S.Title>
 
             <S.Content>
-                
                 <S.CardsArea>
-                {
-                    whereInvest.map(whereInvest => (
-                        <Link to={`/home/` + formataReference(whereInvest.date)}>
-                            <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
-                        </Link>
-                    ))
-                }
-                
-                    
+                    {
+                        whereInvest.map(whereInvest => (
+                            <Link to={`/home/` + formataReference(whereInvest.date)}>
+                                <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
+                            </Link>
+                        ))
+                    }
                 </S.CardsArea>
 
-                {<S.ContentChar>
-                    <Chart
-                        chartType="Line"
-                        width="100%"
-                        height="400px"
-                        data={dadosGrafico}
-                        options={optionsChart}
-                    />
-
-                </S.ContentChar>}
-
+                {
+                    <S.ContentChar>
+                        <Chart
+                            chartType="Line"
+                            width="100%"
+                            height="400px"
+                            data={dadosGrafico}
+                            options={optionsChart}
+                        />
+                    </S.ContentChar>
+                }
             </S.Content>
 
             <Footer/>

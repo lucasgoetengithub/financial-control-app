@@ -22,6 +22,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { Chart } from "react-google-charts";
+import Grow from '@mui/material/Grow';
   
 
 export const optionsChart = {
@@ -102,6 +103,7 @@ function Calculator() {
     const [userId, setUserId] = React.useState();
     const [email, setEmail] = React.useState();
     const [token, setToken] = React.useState();
+    const [checked, setChecked] = React.useState(false);
 
     const [state, setState] = React.useState({
       gilad: true,
@@ -130,7 +132,7 @@ function Calculator() {
       api.post("/users/email",body,  { 'headers': { 'Authorization': userToken } })
             .then(response =>  {
                 const varUserId = response.data.id;
-                
+
           setUserId(varUserId);      
       })
         
@@ -138,6 +140,10 @@ function Calculator() {
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
+    };
+
+    const handleChangeDisclosure = () => {
+      setChecked((prev) => !prev);
     };
 
     function handleChangeMoney(e) {
@@ -558,8 +564,6 @@ function Calculator() {
                                 </FormControl>
                               </Box>
 
-                          
-
                           <S.Button onClick={calcularAcoes}>Calcular    </S.Button>
                           <S.Button onClick={salvarAcoes}>Salvar calculo    </S.Button>
 
@@ -577,7 +581,6 @@ function Calculator() {
                         options={optionsChart}
                     />
                 </S.chartsArea> : null }
-                
               </Stack>
 
             </S.Content>

@@ -71,6 +71,16 @@ const Login = () => {
         
     };
 
+    function handleSubmit(event) {
+      event.preventDefault();
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handleSignin();
+      }
+    }
     
     return (
         
@@ -91,14 +101,18 @@ const Login = () => {
                         onChange={(e) => [setEmail(e.target.value), setError("")]}
                     />
 
-                    <TextField
-                        required
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        onChange={(e) => [setSenha(e.target.value), setError("")]}
-                    />
+                    <form onSubmit={handleSubmit}>
+                      <TextField
+                          required
+                          id="outlined-password-input"
+                          label="Password"
+                          type="password"
+                          autoComplete="current-password"
+                          onChange={(e) => [setSenha(e.target.value), setError("")]}
+                          onKeyPress={(event) => handleKeyPress(event)}
+                      />
+                    </form>
+                    
                     <S.labelError>{error}</S.labelError>
 
                     <Button onClick={handleSignin}>ENTRAR</Button>

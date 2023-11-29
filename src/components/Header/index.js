@@ -17,9 +17,6 @@ function Header({  }) {
                 <span className='dividir'/>
 
                 <Link to="/calculator">CALCULADORA DE JUROS COMPOSTO</ Link>
-                <span className='dividir'/>
-
-                <Link to="/alocacoes">ALOCAÇÕES</ Link>
             </S.RigthSide>
         </S.Container>
     )

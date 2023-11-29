@@ -60,11 +60,13 @@ function HistoryCards() {
     const [userId, setUserId] = useState();
     const [dadosGrafico, setDadosGrafico] = useState([]);
     const [teste, setTeste] = useState();
+    const [temRegistro, setTemRegistro] = useState(true);
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
         const userToken = user.token;
+        
         setTeste(false);
 
         setEmail(user.email);
@@ -83,6 +85,9 @@ function HistoryCards() {
                     console.log('Dadinhos abaixo');
                     console.log(response.data);
                     setWhereInvest(response.data);    
+                    if (whereInvest.length == 0) {
+                        setTemRegistro(false);
+                    }
                 });
             });
         };
@@ -91,8 +96,6 @@ function HistoryCards() {
         const fetchChart = async () => {
             await api.get("/DistributionWhereInvest/chart/" + userEmail, { 'headers': { 'Authorization': userToken } })
             .then(response =>  {
-                console.log('teste');
-                console.log(response);
                 var dados = [];
                     dados.push([
                         "Reference",
@@ -127,29 +130,31 @@ function HistoryCards() {
                 <h3>Histórico mensal de gastos</h3>                    
             </S.Title>
 
-            <S.Content>
-                <S.CardsArea>
-                    {
-                        whereInvest.map(whereInvest => (
-                            <Link to={`/home/` + formataReference(whereInvest.date)}>
-                                <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
-                            </Link>
-                        ))
-                    }
-                </S.CardsArea>
+            { temRegistro && (
+                <S.Content>
+                    <S.CardsArea >
+                        {
+                            whereInvest.map(whereInvest => (
+                                <Link to={`/home/` + formataReference(whereInvest.date)}>
+                                    <Card reference={whereInvest.date} json={whereInvest.json} amount={whereInvest.amount} whereInvestId={whereInvest.id} />
+                                </Link>
+                            ))
+                        }
+                    </S.CardsArea>
 
-                {
-                    <S.ContentChar>
-                        <Chart
-                            chartType="Line"
-                            width="100%"
-                            height="400px"
-                            data={dadosGrafico}
-                            options={optionsChart}
-                        />
-                    </S.ContentChar>
-                }
-            </S.Content>
+                    {
+                        <S.ContentChar>
+                            <Chart
+                                chartType="Line"
+                                width="100%"
+                                height="400px"
+                                data={dadosGrafico}
+                                options={optionsChart}
+                            />
+                        </S.ContentChar>
+                    }
+                </S.Content>)
+            }
 
             <Footer/>
         </S.Container>

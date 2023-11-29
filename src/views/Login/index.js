@@ -97,11 +97,11 @@ const Login = () => {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Usuário"
+                        label="Email"
                         onChange={(e) => [setEmail(e.target.value), setError("")]}
                     />
 
-                    <form onSubmit={handleSubmit}>
+                    
                       <TextField
                           required
                           id="outlined-password-input"
@@ -111,7 +111,7 @@ const Login = () => {
                           onChange={(e) => [setSenha(e.target.value), setError("")]}
                           onKeyPress={(event) => handleKeyPress(event)}
                       />
-                    </form>
+                    
                     
                     <S.labelError>{error}</S.labelError>
 

@@ -86,9 +86,7 @@ function HistoryCards() {
                     console.log('Dadinhos abaixo');
                     console.log(response.data);
                     setWhereInvest(response.data);    
-                    if (response.data.length == 0) {
-                        setTemRegistro(false);
-                    }
+                    
                 });
             });
         };
@@ -135,7 +133,7 @@ function HistoryCards() {
                 <h3>Histórico mensal de gastos</h3>                    
             </S.Title>
 
-            { temRegistro && (
+            { 
                 <S.Content>
                     <S.CardsArea >
                         {
@@ -158,7 +156,7 @@ function HistoryCards() {
                             />
                         </S.ContentChar>
                     )}
-                </S.Content>)
+                </S.Content>
             }
 
             <Footer/>

@@ -61,6 +61,7 @@ function HistoryCards() {
     const [dadosGrafico, setDadosGrafico] = useState([]);
     const [teste, setTeste] = useState();
     const [temRegistro, setTemRegistro] = useState(true);
+    const [temRegistroDistr, setTemRegistroDistr] = useState(true);
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
@@ -85,7 +86,7 @@ function HistoryCards() {
                     console.log('Dadinhos abaixo');
                     console.log(response.data);
                     setWhereInvest(response.data);    
-                    if (whereInvest.length == 0) {
+                    if (response.data.length == 0) {
                         setTemRegistro(false);
                     }
                 });
@@ -107,6 +108,10 @@ function HistoryCards() {
                     response.data.forEach(element => {
                         dados.push([element.reference, element.amount, element.expenses, element.investments]);
                     });    
+                    
+                    if (response.data.length == 0) {
+                        setTemRegistroDistr(false);
+                    }
                     
                     setDadosGrafico(dados);
             });
@@ -142,7 +147,7 @@ function HistoryCards() {
                         }
                     </S.CardsArea>
 
-                    {
+                    { temRegistroDistr && (
                         <S.ContentChar>
                             <Chart
                                 chartType="Line"
@@ -152,7 +157,7 @@ function HistoryCards() {
                                 options={optionsChart}
                             />
                         </S.ContentChar>
-                    }
+                    )}
                 </S.Content>)
             }
 

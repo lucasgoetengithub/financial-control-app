@@ -76,9 +76,11 @@ const Login = () => {
     }
 
     function handleKeyPress(event) {
+      console.log(event.key);
       if (event.key === "Enter") {
-        event.preventDefault();
+        console.log('teste');
         handleSignin();
+        //event.preventDefault();
       }
     }
     

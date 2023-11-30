@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 
 function Header({  }) {
+    function sair() {
+        localStorage.removeItem("user_token");
+    }
+
     return (
         <S.Container>
             <S.LeftSide>
@@ -17,6 +21,9 @@ function Header({  }) {
                 <span className='dividir'/>
 
                 <Link to="/calculator">CALCULADORA DE JUROS COMPOSTO</ Link>
+                <span className='dividir'/>
+
+                <Link to="/login" onClick={sair}>SAIR</ Link>
             </S.RigthSide>
         </S.Container>
     )

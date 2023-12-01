@@ -78,9 +78,7 @@ const Login = () => {
     function handleKeyPress(event) {
       console.log(event.key);
       if (event.key === "Enter") {
-        console.log('teste');
         handleSignin();
-        //event.preventDefault();
       }
     }
     
@@ -122,8 +120,14 @@ const Login = () => {
                     Não tem uma conta?
                     <S.Strong>
                       <Link to="/register">&nbsp;Registre-se</Link>
+                      <Link to="/recoverpassword">&nbsp;Recuperar senha</Link>
                     </S.Strong>
                   </S.LabelSignup>
+                  
+                  <S.Strong>
+                      <Link to="/recoverpassword">Recuperar senha</Link>
+                  </S.Strong>
+                  
               </Stack>
             </S.Content>
             

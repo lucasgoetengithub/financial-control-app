@@ -36,7 +36,7 @@ export default function Routers() {
                     <Route exact path="/home/:reference" element={<Private Item={Home} />} />
                     <Route exact path="/history" element={<Private Item={HistoryCards} />} />
                     <Route exact path="/calculator" element={<Private Item={Calculator} />} />
-                    <Route exact path="/recoverpassword" element={<Private Item={RecoverPassword} />} />
+                    <Route path="/recoverpassword" element={<RecoverPassword />} />
                 </Routes>
         </Fragment>
         </BrowserRouter>

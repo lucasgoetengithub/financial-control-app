@@ -120,7 +120,6 @@ const Login = () => {
                     Não tem uma conta?
                     <S.Strong>
                       <Link to="/register">&nbsp;Registre-se</Link>
-                      <Link to="/recoverpassword">&nbsp;Recuperar senha</Link>
                     </S.Strong>
                   </S.LabelSignup>
                   

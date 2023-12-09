@@ -1,7 +1,11 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import * as S from "./styles";
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
+import api from "../../service/api.js";
 
 import Header from '../../components/HeaderLoginRegister';
 import Footer from '../../components/Footer';
@@ -26,17 +30,53 @@ const Button = styled.button`
 
 
 const RecoverPassword = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
+  useEffect(() =>{
     
+  });
+
+  const handleRecovery = async (event) => {    
+
+    await api.post(`/users/sentEmailRecovery`, {    })
+    .then(response => {
+    }).catch(err => {
+      setError('Usuario nao encontrado')
+    }) 
+      
+  };
+
+
 
     return (
-        
         <S.Container>
             <Header/>
 
             <S.Title>
                 <h3>Recuperar senha (Em desenvolvimento)</h3>                    
             </S.Title>
+
+            <S.Content>
+            <Stack width='20%' spacing={0.8} direction="column">
+              <TextField
+                  required
+                  id="outlined-required"
+                  label="Email"
+                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+              />
+
+              <Button onClick={handleRecovery}>RECUPERAR</Button>
+              <S.LabelSignup>
+
+                <S.Strong>
+                  <Link to="/login">&nbsp;Fazer login</Link>
+                </S.Strong>
+              </S.LabelSignup>
+            </Stack>
+              
+            </S.Content>
+            
 
             <Footer/>
         </S.Container>

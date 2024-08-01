@@ -29,10 +29,9 @@ const Button = styled.button`
 `;
 
 
-const RecoverPassword = () => {
+const ChangePassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() =>{
     
@@ -42,13 +41,12 @@ const RecoverPassword = () => {
 
     let body = {userEmail : email} ;
 
-    await api.post(`/users/sentEmailRecovery`, body)
+    await api.post(`/users/sentEmailRecovery`, {    })
     .then(response => {
     }).catch(err => {
       setError('Usuario nao encontrado')
     }) 
       
-    navigate('/changepassword/' + email);
   };
 
 
@@ -66,11 +64,25 @@ const RecoverPassword = () => {
               <TextField
                   required
                   id="outlined-required"
-                  label="Email"
+                  label="Código de recuperaçao recebido no email"
                   onChange={(e) => [setEmail(e.target.value), setError("")]}
               />
 
-              <Button onClick={handleRecovery}>RECUPERAR</Button>
+              <TextField
+                  required
+                  id="outlined-required"
+                  label="Nova senha"
+                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+              />
+              
+              <TextField
+                  required
+                  id="outlined-required"
+                  label="Confirmar nova senha"
+                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+              />
+
+              <Button onClick={handleRecovery}>Trocar senha</Button>
               <S.LabelSignup>
 
                 <S.Strong>
@@ -87,4 +99,4 @@ const RecoverPassword = () => {
     )
 }
 
-export default RecoverPassword;
+export default ChangePassword;

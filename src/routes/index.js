@@ -7,6 +7,7 @@ import Home from '../views/Home';
 import HistoryCards from '../views/HistoryCards';
 import Calculator from '../views/Calculator'
 import RecoverPassword from '../views/RecoverPassword'
+import ChangePassword from '../views/ChangePassword';
 
 import useAuth from "../hooks/useAuth";
 
@@ -37,6 +38,7 @@ export default function Routers() {
                     <Route exact path="/history" element={<Private Item={HistoryCards} />} />
                     <Route exact path="/calculator" element={<Private Item={Calculator} />} />
                     <Route path="/recoverpassword" element={<RecoverPassword />} />
+                    <Route path="/changepassword/:email" element={<ChangePassword />} />
                 </Routes>
         </Fragment>
         </BrowserRouter>

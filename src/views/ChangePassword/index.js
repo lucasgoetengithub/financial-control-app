@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import styled from "styled-components";
 import * as S from "./styles";
@@ -30,22 +30,25 @@ const Button = styled.button`
 
 
 const ChangePassword = () => {
-  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const { email } = useParams();
 
   useEffect(() =>{
-    
+    console.log(email);
   });
 
   const handleRecovery = async (event) => {    
 
-    let body = {userEmail : email} ;
+    // let body = {userEmail : email} ;
 
-    await api.post(`/users/sentEmailRecovery`, {    })
-    .then(response => {
-    }).catch(err => {
-      setError('Usuario nao encontrado')
-    }) 
+    // await api.post(`/users/sentEmailRecovery`, {    })
+    // .then(response => {
+    // }).catch(err => {
+    //   setError('Usuario nao encontrado')
+    // }) 
       
   };
 
@@ -65,21 +68,21 @@ const ChangePassword = () => {
                   required
                   id="outlined-required"
                   label="Código de recuperaçao recebido no email"
-                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+                  onChange={(e) => [setCodigo(e.target.value), setError("")]}
               />
 
               <TextField
                   required
                   id="outlined-required"
                   label="Nova senha"
-                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+                  onChange={(e) => [setPassword(e.target.value), setError("")]}
               />
               
               <TextField
                   required
                   id="outlined-required"
                   label="Confirmar nova senha"
-                  onChange={(e) => [setEmail(e.target.value), setError("")]}
+                  onChange={(e) => [setConfirmPassword(e.target.value), setError("")]}
               />
 
               <Button onClick={handleRecovery}>Trocar senha</Button>

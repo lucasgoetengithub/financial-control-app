@@ -35,21 +35,26 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [codigo, setCodigo] = useState("");
   const { email } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() =>{
     console.log(email);
   });
 
-  const handleRecovery = async (event) => {    
+  const handleRecovery = async (event) => {
+    let body = {
+      email : email,
+      codigo: codigo,
+      password: password,
+      confirmPassword: confirmPassword
+    } ;
 
-    // let body = {userEmail : email} ;
-
-    // await api.post(`/users/sentEmailRecovery`, {    })
-    // .then(response => {
-    // }).catch(err => {
-    //   setError('Usuario nao encontrado')
-    // }) 
-      
+    await api.post(`/users/changePassword`, body)
+    .then(response => {
+      navigate('/login');
+    }).catch(err => {
+      setError('Nao foi possivel alterar')
+    }) 
   };
 
 
@@ -75,6 +80,7 @@ const ChangePassword = () => {
                   required
                   id="outlined-required"
                   label="Nova senha"
+                  type="password"
                   onChange={(e) => [setPassword(e.target.value), setError("")]}
               />
               
@@ -82,6 +88,7 @@ const ChangePassword = () => {
                   required
                   id="outlined-required"
                   label="Confirmar nova senha"
+                  type="password"
                   onChange={(e) => [setConfirmPassword(e.target.value), setError("")]}
               />
 

@@ -11,6 +11,7 @@ import Footer from '../../components/Footer';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import useAuth from "../../hooks/useAuth";
+import Alert from '@mui/material/Alert';
 
 import api from '../../service/api.js';
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -131,6 +132,8 @@ const Register = () => {
                       autoComplete="current-password"
                       onChange={(e) => [setConfirmSenha(e.target.value), setError("")]}
                     />
+
+                    {error && <Alert severity="info">{error}</Alert>}
 
                     <Button onClick={handleSignup}>Inscrever</Button>
                       <S.LabelSignin>

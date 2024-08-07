@@ -41,6 +41,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [emailConf, setEmailConf] = useState("");
     const [senha, setSenha] = useState("");
+    const [confirmSenha, setConfirmSenha] = useState("");
     const [name, setName] = useState("");
     const [error, setError] = useState("");
     
@@ -55,6 +56,11 @@ const Register = () => {
           return;
         } else if (email !== emailConf) {
           setError("Os e-mails não são iguais");
+          return;
+        }
+
+        if (senha != confirmSenha) {
+          setError("As senhas informadas precisam ser iguais");
           return;
         }
 
@@ -115,6 +121,15 @@ const Register = () => {
                         type="password"
                         autoComplete="current-password"
                         onChange={(e) => [setSenha(e.target.value), setError("")]}
+                    />
+
+                    <TextField
+                      required
+                      id="outlined-password-input"
+                      label="Confirme Password"
+                      type="password"
+                      autoComplete="current-password"
+                      onChange={(e) => [setConfirmSenha(e.target.value), setError("")]}
                     />
 
                     <Button onClick={handleSignup}>Inscrever</Button>

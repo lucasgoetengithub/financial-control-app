@@ -87,7 +87,7 @@ const columnsAllocation: GridColumns = [
         field: "investExpense",
         headerName: "Invest/Despesa",
         type: "singleSelect",
-        valueOptions: ["Investimento", "Despesa"],
+        valueOptions: ["Investimento", "Despesa", "Estudo"],
         width: 175,
         editable: true
       }

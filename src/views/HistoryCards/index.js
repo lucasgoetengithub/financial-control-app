@@ -109,6 +109,8 @@ function HistoryCards() {
                     
                     if (response.data.length == 0) {
                         setTemRegistroDistr(false);
+                    } else {
+                        setTemRegistroDistr(true);
                     }
                     
                     setDadosGrafico(dados);

@@ -9,6 +9,7 @@ function Card({ reference, json, amount, whereInvestId }) {
   const [investimentos, setInvestimentos] = useState();
   const [despesas, setDespesas] = useState();
   const [referenceLabel, setReferenceLabel] = useState();
+  const [estudo, setEstudo] = useState();
 
   useEffect(() =>{
 
@@ -18,13 +19,16 @@ function Card({ reference, json, amount, whereInvestId }) {
 
     var investimentos = 0.0;
     var despesas = 0.0; 
+    var estudo = 0.0;
     api.get('/DistributionWhereInvest/' + whereInvestId, { 'headers': { 'Authorization': userToken } })
     .then(response=> {
         response.data.jsonDistributionWhereInvests.forEach(element => {
             if (element.investExpense == 'Despesa') {
               despesas = despesas + element.amountUsed;
-            } else {
+            } else if ("Investimento") {
               investimentos = investimentos + element.amountUsed;
+            } else {
+              estudo = estudo + element.amountUsed;
             }
         });
         
@@ -32,6 +36,8 @@ function Card({ reference, json, amount, whereInvestId }) {
         setInvestimentos(investimentosLabel);
         var despesasLabel = despesas.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
         setDespesas(despesasLabel);
+        var estudoLabel = estudo.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+        setEstudo(estudoLabel);
     });
 
     var ganhosLabel = amount.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
@@ -66,6 +72,13 @@ function Card({ reference, json, amount, whereInvestId }) {
                 {investimentos}
               </Stack>
             </S.InvestimentoLabel>
+
+            <S.DespesasLabel>
+              <Stack spacing={2} direction="column">
+                <span>Estudo</span>
+                {estudo}
+              </Stack>
+            </S.DespesasLabel>
 
             <S.DespesasLabel>
               <Stack spacing={2} direction="column">

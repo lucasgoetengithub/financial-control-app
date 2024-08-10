@@ -38,7 +38,7 @@ const ChangePassword = () => {
   const navigate = useNavigate();
 
   useEffect(() =>{
-    console.log(email);
+    
   });
 
   const handleRecovery = async (event) => {

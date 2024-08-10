@@ -76,7 +76,6 @@ const Login = () => {
     }
 
     function handleKeyPress(event) {
-      console.log(event.key);
       if (event.key === "Enter") {
         handleSignin();
       }

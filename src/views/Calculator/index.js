@@ -186,8 +186,6 @@ function Calculator() {
       var listaGrafico = [];
       var valorAtual = 0;
       var rendimentoNoMes = 0;
-      console.log('aporte');
-      console.log(aporteMensalFixa);
 
       var dados = [];
       dados.push([
@@ -218,7 +216,6 @@ function Calculator() {
 
       setDadosGrafico(dados);
 
-      console.log(listaGrafico);
       setListCalculo(listaGrafico);
       setShowElement(true);
     }
@@ -254,12 +251,10 @@ function Calculator() {
       ]);
 
       for (let index = 1; index <= meses; index++) {
-        console.log(index);
         rendimentoNoMes = quantidadeAcoes * dividendoPorAcao;
         
         if (comprarSePossivel === "on" && rendimentoNoMes >= valorAcao) {
           var resto = rendimentoNoMes % valorAcao;
-          console.log(resto);
           quantidadeAcoes = quantidadeAcoes + resto;   
         }
 

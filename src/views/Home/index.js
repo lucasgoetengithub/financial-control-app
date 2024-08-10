@@ -116,8 +116,6 @@ function Home() {
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
         const userToken = user.token;
-        console.log('reference abaixo');
-        console.log(reference);
         
         
         setEmail(user.email);

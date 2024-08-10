@@ -41,12 +41,17 @@ export const GanhoLabel = styled.div`
 `
 
 export const InvestimentoLabel = styled.div`
-    color: #00b33c;
+    color: #ffc222;
     font-weight: bold;
 `
 
 export const DespesasLabel = styled.div`
     color: #ff5c33;
+    font-weight: bold;
+`
+
+export const EstudoLabel = styled.div`
+    color: #00b33c;
     font-weight: bold;
 `
 

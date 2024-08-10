@@ -73,12 +73,12 @@ function Card({ reference, json, amount, whereInvestId }) {
               </Stack>
             </S.InvestimentoLabel>
 
-            <S.DespesasLabel>
+          <S.EstudoLabel>
               <Stack spacing={2} direction="column">
                 <span>Estudo</span>
                 {estudo}
               </Stack>
-            </S.DespesasLabel>
+            </S.EstudoLabel>
 
             <S.DespesasLabel>
               <Stack spacing={2} direction="column">

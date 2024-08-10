@@ -45,6 +45,7 @@ import { Chart } from "react-google-charts";
     colors:[ 
         '#0000e6', 
         '#ff5c33',
+        '#ffc222',
         '#00b33c',
     ],
 
@@ -65,6 +66,7 @@ function HistoryCards() {
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
+        console.log(user);
         const userEmail = user.email;
         const userToken = user.token;
         
@@ -83,8 +85,6 @@ function HistoryCards() {
                 setUserId(varUserId);
                 api.get(`/whereInvest/history/`+varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
-                    console.log('Dadinhos abaixo');
-                    console.log(response.data);
                     setWhereInvest(response.data);    
                     
                 });
@@ -93,7 +93,9 @@ function HistoryCards() {
 
 
         const fetchChart = async () => {
-            await api.get("/DistributionWhereInvest/chart/" + userEmail, { 'headers': { 'Authorization': userToken } })
+            console.log(userToken);
+            let body = { email : userEmail };
+            await api.post("/DistributionWhereInvest/chart", body, { 'headers': { 'Authorization': userToken } })
             .then(response =>  {
                 var dados = [];
                     dados.push([
@@ -101,10 +103,12 @@ function HistoryCards() {
                         "Ganhos",
                         "Despesas",
                         "Investimentos",
+                        "Estudo"
                     ]);
 
                     response.data.forEach(element => {
-                        dados.push([element.reference, element.amount, element.expenses, element.investments]);
+                        console.log(element);
+                        dados.push([element.reference, element.amount, element.investments, element.estudo, element.expenses]);
                     });    
                     
                     if (response.data.length == 0) {

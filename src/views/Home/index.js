@@ -146,7 +146,7 @@ function Home() {
 
                     });
 
-                    rowsWhereInvest.sort(compare)
+                    rowsWhereInvest.sort(compare);
                     setColuns(columnsPie);
                     setRows(rowsWhereInvest);
                     setWhereInvestId(response.data[0].id);

@@ -23,6 +23,9 @@ function Header({  }) {
                 <Link to="/calculator">CALCULADORA DE JUROS COMPOSTO</ Link>
                 <span className='dividir'/>
 
+                <Link to="/consultcalculator">CONSULTAR CALCULOS</ Link>
+                <span className='dividir' />
+
                 <Link to="/login" onClick={sair}>SAIR</ Link>
             </S.RigthSide>
         </S.Container>

@@ -66,7 +66,6 @@ function HistoryCards() {
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
-        console.log(user);
         const userEmail = user.email;
         const userToken = user.token;
         
@@ -85,15 +84,14 @@ function HistoryCards() {
                 setUserId(varUserId);
                 api.get(`/whereInvest/history/`+varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
+                    console.log(response);
                     setWhereInvest(response.data);    
-                    
                 });
             });
         };
 
 
         const fetchChart = async () => {
-            console.log(userToken);
             let body = { email : userEmail };
             await api.post("/DistributionWhereInvest/chart", body, { 'headers': { 'Authorization': userToken } })
             .then(response =>  {
@@ -107,7 +105,6 @@ function HistoryCards() {
                     ]);
 
                     response.data.forEach(element => {
-                        console.log(element);
                         dados.push([element.reference, element.amount, element.investments, element.estudo, element.expenses]);
                     });    
                     

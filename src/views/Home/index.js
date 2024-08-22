@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 import styled from "styled-components";
@@ -111,12 +112,12 @@ function Home() {
     const [message, setMessage] = React.useState('');
     const [messageDistribution, setMessageDistribution] = React.useState('');
     const {reference} = useParams();
-    
+    const navigate = useNavigate();
+
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
         const userEmail = user.email;
         const userToken = user.token;
-        
         
         setEmail(user.email);
         setToken(user.token);
@@ -151,6 +152,12 @@ function Home() {
                     setRows(rowsWhereInvest);
                     setWhereInvestId(response.data[0].id);
                 })
+                .catch(error => {
+                    if (error.response.status == 403) {
+                        navigate('/login');
+                    }
+                });
+
             } else {
                 api.get(`/whereInvest/allByUser/` + varUserId, { 'headers': { 'Authorization': userToken } })
                 .then(response=> {
@@ -175,6 +182,11 @@ function Home() {
                     setRows(rowsWhereInvest);
                     setWhereInvestId(response.data[0].id);
                 })
+                .catch(error => {
+                    if (error.response.status == 403) {
+                        navigate('/login');
+                    }
+                });
             }
             
         
@@ -194,6 +206,11 @@ function Home() {
                     });
                     setRowsAllocation(rowsAllocation);
                 })
+                .catch(error => {
+                    if (error.response.status == 403) {
+                        navigate('/login');
+                    }
+                });
             }
         })
         
@@ -237,6 +254,11 @@ function Home() {
 
             setRowsAllocation(rowsAllocation);
         })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
         
     };
 
@@ -296,6 +318,11 @@ function Home() {
                     setRows(rowsWhereInvest);
                     setColuns(columnsPie);
                 })
+                .catch(error => {
+                    if (error.response.status == 403) {
+                        navigate('/login');
+                    }
+                });
             } else {
                 api.get(`/whereInvest/allByUser/` + userId, {headers})
                 .then(response=> {
@@ -321,6 +348,11 @@ function Home() {
                     setRows(rowsWhereInvest);
                     setColuns(columnsPie);
                 })
+                .catch(error => {
+                    if (error.response.status == 403) {
+                        navigate('/login');
+                    }
+                });
             }
             
         });
@@ -365,7 +397,12 @@ function Home() {
     async function RemoverAlocation() {
         const headers  = { 'Authorization': token }
         await api.delete(`/DistributionWhereInvest/delete/` + focusedDistributions + `/` + focusedInvest + `/` + whereInvestId, {headers})
-        .then();
+        .then()
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
 
         api.get(`/DistributionWhereInvest/` + whereInvestId, {headers})
             .then(response=> {
@@ -388,13 +425,23 @@ function Home() {
             
                 setRowsAllocation(rowsAllocation);
             })
+            .catch(error => {
+                if (error.response.status == 403) {
+                    navigate('/login');
+                }
+            });
     }
 
     async function RemoverWhereInvest() {
         const headers  = { 'Authorization': token }
 
         await api.delete(`/whereInvest/delete/` + focusedInvest + `/` + whereInvestId, {headers})
-        .then();
+        .then()
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
 
         await api.get(`/whereInvest/allByUser/` + userId, {headers})
         .then(response=> {
@@ -418,6 +465,11 @@ function Home() {
             setRows(rowsWhereInvest);
             setWhereInvestId(response.data[0].id);
         })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
     }
 
     async function AdicionarWhereInvest() {
@@ -455,17 +507,25 @@ function Home() {
             rowsWhereInvest.sort(compare)
             setColuns(columnsPie);
             setRows(rowsWhereInvest);
+        })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
         });
     }
 
 
     async function AdicionarAlocation() {
+        console.log("teste1")
         const headers  = { 'Authorization': token }
         api.get(`/DistributionWhereInvest/` + whereInvestId, {headers})
         .then(response=> {
+            console.log("teste2")
             var rowsAllocation = [];
             var newId = 0;
             if (response.data) {
+                console.log("teste3")
                 response.data.jsonDistributionWhereInvests.forEach(element => {
                     if (element.idWhereInvestAllocation === focusedInvest) {
                         if (newId === 0 || newId <= element.id) {
@@ -481,9 +541,9 @@ function Home() {
                             idWhereInvestAllocation: element.idWhereInvestAllocation
                           })
                     }
-                    
-                });
+                })
             }
+            console.log("teste4")
             
 
             rowsAllocation.push({
@@ -495,7 +555,13 @@ function Home() {
                 idWhereInvestAllocation: focusedInvest
             });
             setRowsAllocation(rowsAllocation);
+            console.log("teste5")
         })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
     }
 
     const handleRowAllocationEditCommit: GridEventListener<'cellEditCommit'> = (
@@ -552,6 +618,11 @@ function Home() {
                     
                 })
             }
+        })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
         });
         
     }
@@ -567,6 +638,11 @@ function Home() {
         }, {headers}).then(() => {
             
         })
+        .catch(error => {
+            if (error.response.status == 403) {
+                navigate('/login');
+            }
+        });
     }
 
     return (

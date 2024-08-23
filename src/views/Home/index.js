@@ -517,15 +517,12 @@ function Home() {
 
 
     async function AdicionarAlocation() {
-        console.log("teste1")
         const headers  = { 'Authorization': token }
         api.get(`/DistributionWhereInvest/` + whereInvestId, {headers})
         .then(response=> {
-            console.log("teste2")
             var rowsAllocation = [];
             var newId = 0;
             if (response.data) {
-                console.log("teste3")
                 response.data.jsonDistributionWhereInvests.forEach(element => {
                     if (element.idWhereInvestAllocation === focusedInvest) {
                         if (newId === 0 || newId <= element.id) {
@@ -543,7 +540,6 @@ function Home() {
                     }
                 })
             }
-            console.log("teste4")
             
 
             rowsAllocation.push({
@@ -555,7 +551,6 @@ function Home() {
                 idWhereInvestAllocation: focusedInvest
             });
             setRowsAllocation(rowsAllocation);
-            console.log("teste5")
         })
         .catch(error => {
             if (error.response.status == 403) {

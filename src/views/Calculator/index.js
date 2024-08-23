@@ -23,7 +23,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Switch from '@mui/material/Switch';
 import { Chart } from "react-google-charts";
 import Grow from '@mui/material/Grow';
-  
+ 
 
 export const optionsChart = {
   animation: {

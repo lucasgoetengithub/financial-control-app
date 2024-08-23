@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 import * as S from './styles';
@@ -63,6 +64,7 @@ function HistoryCards() {
     const [teste, setTeste] = useState();
     const [temRegistro, setTemRegistro] = useState(true);
     const [temRegistroDistr, setTemRegistroDistr] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() =>{
         const user = JSON.parse(localStorage.getItem("user_token"));
@@ -87,6 +89,11 @@ function HistoryCards() {
                     console.log(response);
                     setWhereInvest(response.data);    
                 });
+            })
+            .catch(error => {
+                if (error.response.status == 403) {
+                    navigate('/login');
+                }
             });
         };
 
@@ -115,6 +122,11 @@ function HistoryCards() {
                     }
                     
                     setDadosGrafico(dados);
+            })
+            .catch(error => {
+                if (error.response.status == 403) {
+                    navigate('/login');
+                }
             });
         };
         
